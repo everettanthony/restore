@@ -1,10 +1,10 @@
 import { Fragment } from "react";
+import { useAppSelector } from "../../app/store/configureStore";
 import { TableContainer, Paper, Table, TableBody, TableRow, TableCell } from "@mui/material";
 import totalsNumFormatted from "../../app/utilities/totalsNumFormatted";
-import { useStoreContext } from "../../app/context/StoreContext";
 
 export default function BasketSummary() {
-    const {basket} = useStoreContext();
+    const { basket } = useAppSelector(state => state.basket);
     const subTotal = basket?.items.reduce((sum, item) => sum + (item.quantity * item.price), 0) ?? 0;
     const deliveryFee = subTotal > 10000 ? 0 : 500;
 
