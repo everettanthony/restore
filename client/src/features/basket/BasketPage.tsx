@@ -53,9 +53,9 @@ export default function BasketPage() {
                     </LoadingButton>
                     <span style={{paddingLeft: 3, paddingRight: 3}}>{item.quantity}</span>
                     <LoadingButton 
-                      loading={status === 'pendingAddItem' + item.productId} 
+                      loading={status === 'pendingAddItem' + item.productId + 'add'} 
                       color='secondary' 
-                      onClick={() => dispatch(addBasketItemAsync({productId: item.productId}))}>
+                      onClick={() => dispatch(addBasketItemAsync({productId: item.productId, name: 'add'}))}>
                       <Add />
                     </LoadingButton>
                     </TableCell>
