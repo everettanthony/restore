@@ -3,10 +3,15 @@ import { useAppSelector } from "../../app/store/configureStore";
 import { TableContainer, Paper, Table, TableBody, TableRow, TableCell } from "@mui/material";
 import totalsNumFormatted from "../../app/utilities/totalsNumFormatted";
 
-export default function BasketSummary() {
+interface Props {
+  subtotal?: number;
+}
+
+export default function BasketSummary({subtotal}: Props) {
     const { basket } = useAppSelector(state => state.basket);
-    const subTotal = basket?.items.reduce((sum, item) => sum + (item.quantity * item.price), 0) ?? 0;
-    const deliveryFee = subTotal > 10000 ? 0 : 500;
+    if (subtotal === undefined)
+       subtotal = basket?.items.reduce((sum, item) => sum + (item.quantity * item.price), 0) ?? 0;
+    const deliveryFee = subtotal > 10000 ? 0 : 500;
 
     return (
       <Fragment>
@@ -15,7 +20,7 @@ export default function BasketSummary() {
             <TableBody>
               <TableRow>
                 <TableCell colSpan={2} sx={{fontWeight: 700}}>Subtotal</TableCell>
-                <TableCell align="right">{totalsNumFormatted(subTotal)}</TableCell>
+                <TableCell align="right">{totalsNumFormatted(subtotal)}</TableCell>
               </TableRow>
               <TableRow>
                 <TableCell colSpan={2} sx={{fontWeight: 700}}>Delivery fee*</TableCell>
@@ -23,7 +28,7 @@ export default function BasketSummary() {
               </TableRow>
               <TableRow>
                 <TableCell colSpan={2} sx={{fontWeight: 700}}>Total</TableCell>
-                <TableCell align="right">{totalsNumFormatted(subTotal + deliveryFee)}</TableCell>
+                <TableCell align="right">{totalsNumFormatted(subtotal + deliveryFee)}</TableCell>
               </TableRow>
               <TableRow>
                 <TableCell>
